@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import "./css/App.css";
-import AddTodo from "./components/AddTodo";
-import TodoList from "./components/TodoList";
-import DeleteTodo from "./components/DeleteTodo";
+import { useState } from "react";
+import "./App.css";
 
 type Todo = {
   id: number;
@@ -12,14 +9,12 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  let title: stiring;
+  title = 2;
 
   return (
     <div className="App">
       <h1>- Todoアプリ -</h1>
-      <AddTodo todos={todos} setTodos={setTodos} />
-      <TodoList todos={todos} setTodos={setTodos} />
-      <p>残りTodo件数 : {todos.length}件</p>
-      <DeleteTodo todos={todos} setTodos={setTodos} />
     </div>
   );
 }
