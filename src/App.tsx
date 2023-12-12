@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react';
+import './App.css';
 
 type Todo = {
   id: number;
@@ -10,16 +10,15 @@ type Todo = {
 function App() {
   // const [todos, setTodos] = useState<Todo[]>([]);
 
-  const todos: Todo;
-  [] = [
+  const todos: Todo[] = [
     {
       id: 1,
-      task: "掃除",
+      task: '掃除',
       completed: false,
     },
     {
       id: 2,
-      task: "洗濯",
+      task: '洗濯',
       completed: true,
     },
   ];
