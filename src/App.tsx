@@ -9,8 +9,6 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  let title: stiring;
-  title = 2;
 
   return (
     <div className="App">
