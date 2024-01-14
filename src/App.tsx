@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 type Todo = {
   id: number;
@@ -9,24 +9,29 @@ type Todo = {
 
 function App() {
   // const [todos, setTodos] = useState<Todo[]>([]);
-
-  const todos: Todo[] = [
-    {
-      id: 1,
-      task: '掃除',
-      completed: false,
-    },
-    {
-      id: 2,
-      task: '洗濯',
-      completed: true,
-    },
-  ];
+  const [todos, setTodos] = useState([]);
+  const [todoTitle, setTodoTitle] = useState("");
+  const [todoId, setTodoId] = useState(todos.length + 1);
+  const handleAddFormChanges = (e) => {
+    setTodoTitle(e.target.value);
+  };
+  const handleAddTodo = () => {
+    setTodos([...todos, { id: todoId, title: todoTitle }]);
+    setTodoId(todoId + 1);
+    setTodoTitle("");
+  };
+  const handleDeleteTodo = (targetTodo) => {
+    setTodos(todos.filter((todo) => todo !== targetTodo));
+  };
 
   return (
-    <div className="App">
-      <h1>- Todoアプリ -</h1>
-    </div>
+    <>
+      <div>
+        <input type="text" value={todoTitle} onChange={handleAddFormChanges} />
+
+        <button onClick={handleAddTodo}>作成</button>
+      </div>
+    </>
   );
 }
 
