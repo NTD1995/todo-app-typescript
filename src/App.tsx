@@ -3,13 +3,17 @@ import "./App.css";
 
 type Todo = {
   id: number;
-  task: string;
-  completed: boolean;
+  title: string;
+  status: string;
+  detail: string;
 };
 
 function App() {
-  // const [todos, setTodos] = useState<Todo[]>([]);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+  ]);
   const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
   const handleAddFormChanges = (e: any) => {
@@ -18,7 +22,7 @@ function App() {
   const handleAddTodo = () => {
     setTodos([
       ...todos,
-      const objectSample: { title: string; id: number } = { title: 'todoTitle', id: todoId }
+      //   const objectSample: { title: string; id: number } = { title: 'todoTitle', id: todoId }
     ]);
     setTodoId(todoId + 1);
     setTodoTitle("");
