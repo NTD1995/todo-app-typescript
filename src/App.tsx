@@ -12,16 +12,19 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
-  const handleAddFormChanges = (e) => {
+  const handleAddFormChanges = (e: any) => {
     setTodoTitle(e.target.value);
   };
   const handleAddTodo = () => {
-    setTodos([...todos, { id: todoId, title: todoTitle }]);
+    setTodos([
+      ...todos,
+      const objectSample: { title: string; id: number } = { title: 'todoTitle', id: todoId }
+    ]);
     setTodoId(todoId + 1);
     setTodoTitle("");
   };
-  const handleDeleteTodo = (targetTodo) => {
-    setTodos(todos.filter((todo) => todo !== targetTodo));
+  const handleDeleteTodo = (targetTodo: any) => {
+    setTodos(todos.filter((todo: any) => todo !== targetTodo));
   };
 
   return (
@@ -31,6 +34,14 @@ function App() {
 
         <button onClick={handleAddTodo}>作成</button>
       </div>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <span>{todo.title}</span>
+            <button onClick={() => handleDeleteTodo(todo)}>削除</button>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
