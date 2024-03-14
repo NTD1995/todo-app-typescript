@@ -4,15 +4,13 @@ import "./App.css";
 type Todo = {
   id: number;
   title: string;
-  status: string;
-  detail: string;
 };
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
-    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
-    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 1, title: "テスト" },
+    { id: 1, title: "テスト" },
+    { id: 1, title: "テスト" },
   ]);
   const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
@@ -20,10 +18,9 @@ function App() {
     setTodoTitle(e.target.value);
   };
   const handleAddTodo = () => {
-    setTodos([
-      ...todos,
-      //   const objectSample: { title: string; id: number } = { title: 'todoTitle', id: todoId }
-    ]);
+    setTodos([...todos, { title: todoTitle, id: todoId }]);
+
+    setTodoId(todoId + 1);
     setTodoId(todoId + 1);
     setTodoTitle("");
   };
