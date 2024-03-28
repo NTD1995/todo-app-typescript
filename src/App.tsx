@@ -18,8 +18,6 @@ function App() {
   const [todoId, setTodoId] = useState(todos.length + 1);
   const [todoStatus, setTodoStatus] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
-  const [isEditable, setIsEditable] = useState(false)
-  const [detailId, setDetailId] = useState("")
 
   const handleAddFormChanges = (e: any) => {
     setTodoTitle(e.target.value);
@@ -37,28 +35,18 @@ function App() {
   const handleDeleteTodo = (targetTodo: any) => {
     setTodos(todos.filter((todo: any) => todo !== targetTodo));
   };
-
-    const handleOpenDetailForm = () => {
-    setTodoDetail(true)
-    setDetailId(todo.id)
-  }
-
-  const handleCloseDetailForm = () => {
-    setTodoDetail(false)
-    setDetailId(todo.id)
+  // 入力された値でdetail（todoDetail）を更新する処理
+  // 選択された値でstatus（todoStatus）を更新する処理
 
   return (
     <>
-          {isEditable ? (
       <div>
+        {/* titleの入力フォーム */}
         <input type="text" value={todoTitle} onChange={handleAddFormChanges} />
-
+        {/* detailの入力フォーム */}
+        {/* statusを選択するためのプルダウン */}
         <button onClick={handleAddTodo}>作成</button>
-        <button>詳細を保存</button>
-        <button onClick={handleCloseDetailForm}>キャンセル</button>
       </div>
-       ) : (
-               )}
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
@@ -70,7 +58,6 @@ function App() {
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
             </select>
-            <button onClick={handleOpenDetailForm}>詳細</button>
             <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
