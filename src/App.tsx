@@ -36,15 +36,40 @@ function App() {
     setTodos(todos.filter((todo: any) => todo !== targetTodo));
   };
   // 入力された値でdetail（todoDetail）を更新する処理
+
   // 選択された値でstatus（todoStatus）を更新する処理
 
   return (
     <>
       <div>
         {/* titleの入力フォーム */}
-        <input type="text" value={todoTitle} onChange={handleAddFormChanges} />
+        <label style={{ display: "block" }} htmlFor="title">
+          タイトル
+        </label>
+        <textarea
+          style={{ width: "20em", border: "1px solid #333" }}
+          id="title"
+          name="title"
+          value={todoTitle}
+          onChange={(e) => setTodoTitle(e.target.value)}
+        />
         {/* detailの入力フォーム */}
+        <label style={{ display: "block" }} htmlFor="title">
+          詳細
+        </label>
+        <textarea
+          style={{ width: "40em", border: "1px solid #333" }}
+          id="title"
+          name="title"
+          value={todoTitle}
+          onChange={(e) => setTodoTitle(e.target.value)}
+        />
         {/* statusを選択するためのプルダウン */}
+        <select value={todoStatus}>
+          <option value="notStarted">未着手</option>
+          <option value="inProgress">作業中</option>
+          <option value="done">完了</option>
+        </select>
         <button onClick={handleAddTodo}>作成</button>
       </div>
       <ul>
@@ -53,7 +78,7 @@ function App() {
             <span>
               {todo.title} {todo.status} {todo.detail}
             </span>
-              <select value={todo.status}>
+            <select value={todo.status}>
               <option value="notStarted">未着手</option>
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
