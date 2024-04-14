@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import { on } from "stream";
+import "./App.css";
 
 type Todo = {
   id: number;
@@ -10,14 +11,14 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 2, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 3, title: 'テスト', status: '未着手', detail: 'あ' },
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 2, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 3, title: "テスト", status: "未着手", detail: "あ" },
   ]);
-  const [todoTitle, setTodoTitle] = useState('');
+  const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
-  const [todoStatus, setTodoStatus] = useState('');
-  const [todoDetail, setTodoDetail] = useState('');
+  const [todoStatus, setTodoStatus] = useState("");
+  const [todoDetail, setTodoDetail] = useState("");
 
   // 入力された値でtitle（todoTitle）を更新する処理
   // eはイベントオブジェクト（eventのe）
@@ -27,11 +28,14 @@ function App() {
 
   // todoを追加する処理
   const handleAddTodo = () => {
-    setTodos([...todos, { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail }]);
+    setTodos([
+      ...todos,
+      { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail },
+    ]);
 
     setTodoId(todoId + 1);
     setTodoId(todoId + 1);
-    setTodoTitle('');
+    setTodoTitle("");
   };
 
   // todoを削除する処理
@@ -40,18 +44,29 @@ function App() {
   };
 
   // 入力された値でdetail（todoDetail）を更新する処理
-
+  const onChangeTodoDetail = (e: any) => {
+    setTodoDetail(e.target.value);
+  };
   // 選択された値でstatus（todoStatus）を更新する処理
+  const onChangeTodoStatus = (e: any) => {
+    setTodoStatus(e.target.value);
+  };
+
+  const onClickAdd = () => {
+    if (todoTitle === "") return;
+    const todos = [...todoId, todoTitle, todoDetail, todoStatus];
+    setTodoTitle("");
+  };
 
   return (
     <>
       <div>
         {/* titleの入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="title">
+        <label style={{ display: "block" }} htmlFor="title">
           タイトル
         </label>
         <textarea
-          style={{ width: '20em', border: '1px solid #333' }}
+          style={{ width: "20em", border: "1px solid #333" }}
           id="title"
           name="title"
           value={todoTitle}
@@ -59,10 +74,16 @@ function App() {
           // イベントオブジェクトだけを受け取る場合は関数名のみでOK
         />
         {/* detailの入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="detail">
+        <label style={{ display: "block" }} htmlFor="detail">
           詳細
         </label>
-        <textarea style={{ width: '40em', border: '1px solid #333' }} id="detail" name="detail" value={todoDetail} />
+        <textarea
+          style={{ width: "40em", border: "1px solid #333" }}
+          id="detail"
+          name="detail"
+          value={todoDetail}
+          onChange={onChangeTodoDetail}
+        />
         {/* statusを選択するためのプルダウン */}
         <select value={todoStatus}>
           <option value="notStarted">未着手</option>
@@ -70,6 +91,7 @@ function App() {
           <option value="done">完了</option>
         </select>
         <button onClick={handleAddTodo}>作成</button>
+        onChange={onChangeTodoStatus}
       </div>
       <ul>
         {todos.map((todo) => (
