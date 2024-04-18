@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import { on } from "stream";
+import "./App.css";
+
 
 type Todo = {
   id: number;
@@ -10,16 +12,22 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 2, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 3, title: 'テスト', status: '未着手', detail: 'あ' },
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 2, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 3, title: "テスト", status: "未着手", detail: "あ" },
   ]);
-  const [todoTitle, setTodoTitle] = useState('');
+  const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
-  const [todoStatus, setTodoStatus] = useState('');
-  const [todoDetail, setTodoDetail] = useState('');
+  const [todoStatus, setTodoStatus] = useState("");
+  const [todoDetail, setTodoDetail] = useState("");
+  const [isEditable, setIsEditable] = useState(false)
+  const [editId, setEditId] = useState("")
+  const [newTitle, setNewTitle] = useState("")
 
   // 入力された値でtitle（todoTitle）を更新する処理
+  const onChangeTodoTitle = (e: any) => {
+    setTodoTitle(e.target.value);
+  };
   // eはイベントオブジェクト（eventのe）
   // イベントとは、ユーザーが行う操作（クリック、入力、スクロールなど）のこと
   // イベントオブジェクトはイベントが発生した時の情報が入っている
@@ -29,13 +37,16 @@ function App() {
   const handleAddTodo = () => {
     // バリデーション
     // todoTitleが空の場合は何もしない
-    if (todoTitle === '') return;
+    if (todoTitle === "") return;
 
-    setTodos([...todos, { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail }]);
+    setTodos([
+      ...todos,
+      { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail },
+    ]);
 
     setTodoId(todoId + 1);
     setTodoId(todoId + 1);
-    setTodoTitle('');
+    setTodoTitle("");
   };
 
   // todoを削除する処理
@@ -49,55 +60,75 @@ function App() {
   };
   // 選択された値でstatus（todoStatus）を更新する処理
   const onChangeTodoStatus = (e: any) => {
-    setTodoStatus(e.target.value);
+    setTodoStatus(e.target);
   };
 
-  // handleAddTodo関数と同じなので不要
-  const onClickAdd = () => {
-    if (todoTitle === '') return;
-    // ...はスプレッド構文で、配列やオブジェクトを展開する時に使う
-    // 例えば、配列の中身を展開して別の配列に代入する時に使う
-    // todoIdはは配列ではないので、エラーになっている
-    // 修正前
-    // const todos = [...todoId, todoTitle, todoDetail, todoStatus];
-    // 修正後
-    // newTodosは以下のような配列になる
-    // [todo1, todo2, todo3, "タイトル", "詳細", "notStarted"]
-    const newTodos = [...todos, todoTitle, todoDetail, todoStatus];
-    setTodoTitle('');
-  };
+     const handleOpenEditForm = (todo) => {
+    setIsEditable(true)
+    setEditId(todo.id)
+    setNewTitle(todo.title)
+  }
+
+    const handleEditFormChange = (e) => {
+    setNewTitle(e.target.value)
+  }
+
+  const handleCloseEditForm = () => {
+    setIsEditable(false)
+    setEditId('')
+  }
+
+   const handleEditTodo = () => {
+    const newArray = todos.map((todo) =>
+      todo.id === editId ? { ...todo, title: newTitle } : todo
+    )
+    setTodos(newArray)
+    setEditId('')
+
+    setNewTitle('')
+    handleCloseEditForm('')
 
   return (
     <>
       <div>
         {/* titleの入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="title">
+        <label style={{ display: "block" }} htmlFor="title">
           タイトル
         </label>
         <textarea
-          style={{ width: '20em', border: '1px solid #333' }}
+          style={{ width: "20em", border: "1px solid #333" }}
           id="title"
           name="title"
           value={todoTitle}
+           onChange={handleEditFormChange}
+          />
+          <button onClick={handleEditTodo}>編集を保存</button>
+          <button onClick={handleCloseEditForm}>キャンセル</button>
           // 本来は引数を受け取る場合は () => {} の形でないといけないが、onChangeは指定された関数に自動でイベントオブジェクトを渡すため、
           // イベントオブジェクトだけを受け取る場合は関数名のみでOK
           // onChangeイベントを使って、入力された値でtitle（todoTitle）を更新する処理を設定する
+          onChange={onChangeTodoTitle}
         />
         {/* detailの入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="detail">
+        <label style={{ display: "block" }} htmlFor="detail">
           詳細
         </label>
         <textarea
-          style={{ width: '40em', border: '1px solid #333' }}
+          style={{ width: "40em", border: "1px solid #333" }}
           id="detail"
           name="detail"
           value={todoDetail}
           onChange={onChangeTodoDetail}
+          onChange={handleEditFormChanges}
+          />
+          <button onClick={handleEditTodo}>編集を保存</button>
+          <button onClick={handleCloseEditForm}>キャンセル</button>
         />
         {/* statusを選択するためのプルダウン */}
         <select
           value={todoStatus}
           // onChangeイベントを使って、選択された値でstatus（todoStatus）を更新する処理を設定する
+          onChange={onChangeTodoStatus}
         >
           <option value="notStarted">未着手</option>
           <option value="inProgress">作業中</option>
@@ -116,6 +147,7 @@ function App() {
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
             </select>
+            <button onClick={() => handleDeleteTodo(todo)}>編集</button>
             <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
