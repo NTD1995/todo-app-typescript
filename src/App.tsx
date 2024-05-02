@@ -29,9 +29,11 @@ function App() {
   // 課題3
   // 編集用の詳細の入力フォームの入力値を保持するstate（newDetail）
   // この下の定義を修正してください
+  const [newDetail, setNewDetail] = useState("");
   // 課題3
   // 編集用のステータスのプルダウンの入力値を保持するstate（newStatus）
   // この下の定義を修正してください
+  const [newStatus, setNewStatus] = useState("");
 
   // eはイベントオブジェクト（eventのe）
   // イベントとは、ユーザーが行う操作（クリック、入力、スクロールなど）のこと
@@ -209,7 +211,7 @@ function App() {
             {/* 課題2 */}
             {/* 編集ボタンを押すとtodoを編集するためのフォームが開くようにする */}
             {/* 現在は編集ボタンを押すとtodoが削除されてしまうので、修正してください */}
-            <button onClick={() => handleDeleteTodo(todo)}>編集</button>
+            <button onClick={() => handleOpenEditTodo(todo)}>編集</button>
             <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
@@ -218,12 +220,19 @@ function App() {
       {/* 課題2 */}
       {/* 「編集」ボタンを押したら開くようにする */}
       {/* この下のdivタグが編集ボタンを押すことで現れるようにしてください */}
+      const handleOpenEditForm = () => {
+    setIsEditable(true)
+  }
       {/* 課題3 */}
       {/* 作成したフォームやプルダウンにステートを更新する処理を追加する */}
+      
       {/* 課題4 */}
       {/* 編集を保存するボタンを押すと、todoを編集する処理を追加する */}
       {/* 課題4 */}
       {/* キャンセルするボタンを押すと、編集フォームを閉じる処理を追加する */}
+        const handleCloseEditForm = () => {
+    setIsEditable(false)
+  }
       <div>
         {/* 課題1 */}
         {/* 編集用のタイトルの入力フォーム */}
