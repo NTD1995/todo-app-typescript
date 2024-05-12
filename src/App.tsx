@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 type Todo = {
   id: number;
@@ -10,30 +10,30 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 2, title: 'テスト', status: '未着手', detail: 'あ' },
-    { id: 3, title: 'テスト', status: '未着手', detail: 'あ' },
+    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 2, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 3, title: "テスト", status: "未着手", detail: "あ" },
   ]);
-  const [todoTitle, setTodoTitle] = useState('');
+  const [todoTitle, setTodoTitle] = useState("");
   const [todoId, setTodoId] = useState(todos.length + 1);
-  const [todoStatus, setTodoStatus] = useState('');
-  const [todoDetail, setTodoDetail] = useState('');
+  const [todoStatus, setTodoStatus] = useState("");
+  const [todoDetail, setTodoDetail] = useState("");
   const [isEditable, setIsEditable] = useState(false);
   // 課題4
   // 編集対象のtodoのidを保持するstate（editId）を作成する
   // todoのidは数値なので、型はnumberにする
   // この下の定義を修正してください
-  const [editId, setEditId] = useState('');
+  const [editId, setEditId] = useState("");
   // 編集用のタイトルの入力フォームの入力値を保持するstate（newTitle）
-  const [newTitle, setNewTitle] = useState('');
+  const [newTitle, setNewTitle] = useState("");
   // 課題3
   // 編集用の詳細の入力フォームの入力値を保持するstate（newDetail）
   // この下の定義を修正してください
-  const [newDetail, setNewDetail] = useState('');
+  const [newDetail, setNewDetail] = useState("");
   // 課題3
   // 編集用のステータスのプルダウンの入力値を保持するstate（newStatus）
   // この下の定義を修正してください
-  const [newStatus, setNewStatus] = useState('');
+  const [newStatus, setNewStatus] = useState("");
 
   // eはイベントオブジェクト（eventのe）
   // イベントとは、ユーザーが行う操作（クリック、入力、スクロールなど）のこと
@@ -49,13 +49,16 @@ function App() {
   const handleAddTodo = () => {
     // バリデーション
     // todoTitleが空の場合は何もしない
-    if (todoTitle === '') return;
+    if (todoTitle === "") return;
 
-    setTodos([...todos, { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail }]);
+    setTodos([
+      ...todos,
+      { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail },
+    ]);
 
     setTodoId(todoId + 1);
     setTodoId(todoId + 1);
-    setTodoTitle('');
+    setTodoTitle("");
   };
 
   // todoを削除する処理
@@ -70,7 +73,7 @@ function App() {
 
   // 選択された値でstatus（todoStatus）を更新する処理
   const onChangeTodoStatus = (e: any) => {
-    setTodoStatus(e.target);
+    setTodoStatus(e.target.value);
   };
 
   // 編集フォームを開く処理
@@ -98,17 +101,21 @@ function App() {
   // 課題3
   // 編集用の詳細の入力フォームの入力値を更新する処理
   // この下に処理を記述してください
-
+  const handleEditDetailChange = (e: any) => {
+    setIsEditable(e.target.value);
+  };
   // 課題3
   // 編集用のステータスのプルダウンの入力値を更新する処理
   // この下に処理を記述してください
-
+  const handleEditStatusChange = (e: any) => {
+    setIsEditable(e.target.value);
+  };
   // 編集フォームを閉じる処理
   const handleCloseEditForm = () => {
     // 編集フォームを閉じる
     setIsEditable(false);
     // 編集対象のtodoのidをリセットする
-    setEditId('');
+    setEditId("");
     // 課題5
     // 編集用のタイトルの入力フォームをリセットする
     // この下に処理を記述してください
@@ -128,14 +135,18 @@ function App() {
     // 編集対象のtodoを入力されたtitle、detail、statusで更新した新しい配列（newArray）を作成する
     // mapメソッドを使って、編集対象のtodoのid（editId）とidが一致するtodoのtitle、detail、statusを更新する
     // この下の処理を修正してください
-    // const newArray = todos.map((todo) => (todo.id === editId ? { ...todo, title: newTitle } : todo));
+    const newArray = todos.map((todo) =>
+      todo.id === editId
+        ? { ...todo, title: newTitle, detail: newDetail, status: newStatus }
+        : todo
+    );
     // todosをnewArrayで更新する
-    // setTodos(newArray);
+    setTodos(newArray);
 
     // 編集対象のtodoのidをリセットする
-    setEditId('');
+    setEditId("");
     // 入力されたタイトルをリセットする
-    setNewTitle('');
+    setNewTitle("");
     // 課題5
     // 入力された詳細をリセットする
     // この下に処理を記述してください
@@ -147,7 +158,9 @@ function App() {
     // 課題4
     // 編集フォームを閉じる
     // この下の処理を修正してください
-    // handleCloseEditForm('');
+    const handleCloseEditForm = () => {
+      setIsEditable(false);
+    };
   };
 
   return (
@@ -155,11 +168,11 @@ function App() {
       {/* todoを新規追加するためのフォーム */}
       <div>
         {/* タイトルの入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="title">
+        <label style={{ display: "block" }} htmlFor="title">
           タイトル
         </label>
         <textarea
-          style={{ width: '20em', border: '1px solid #333' }}
+          style={{ width: "20em", border: "1px solid #333" }}
           id="title"
           name="title"
           value={todoTitle}
@@ -168,11 +181,11 @@ function App() {
         <button onClick={handleEditTodo}>編集を保存</button>
         <button onClick={handleCloseEditForm}>キャンセル</button>
         {/* 詳細の入力フォーム */}
-        <label style={{ display: 'block' }} htmlFor="detail">
+        <label style={{ display: "block" }} htmlFor="detail">
           詳細
         </label>
         <textarea
-          style={{ width: '40em', border: '1px solid #333' }}
+          style={{ width: "40em", border: "1px solid #333" }}
           id="detail"
           name="detail"
           value={todoDetail}
@@ -225,14 +238,14 @@ function App() {
       {/* isEditable === true ? true : 偽の時 */}
       {isEditable === true ? (
         <div>
-          <label style={{ display: 'block' }} htmlFor="title">
+          <label style={{ display: "block" }} htmlFor="title">
             タイトル
           </label>
           {/* 課題1 */}
           {/* 編集用のタイトルの入力フォーム */}
           {/* この下に書いてください */}
           <textarea
-            style={{ width: '20em', border: '1px solid #333' }}
+            style={{ width: "20em", border: "1px solid #333" }}
             id="title"
             name="title"
             value={newTitle}
@@ -241,7 +254,13 @@ function App() {
           {/* 課題1 */}
           {/* 編集用の詳細の入力フォーム */}
           {/* この下に書いてください */}
-          <textarea style={{ width: '20em', border: '1px solid #333' }} id="detail" name="detail" value={newDetail} />
+          <textarea
+            style={{ width: "20em", border: "1px solid #333" }}
+            id="detail"
+            name="detail"
+            value={newDetail}
+          />
+          onChange={handleEditDetailChange}
           {/* 課題1 */}
           {/* 編集用のステータスのプルダウン */}
           {/* この下に書いてください */}
@@ -251,6 +270,7 @@ function App() {
             <option value="inProgress">作業中</option>
             <option value="done">完了</option>
           </select>
+          onChange={handleEditStatusChange}
           {/* 課題1 */}
           {/* 編集を保存するボタン */}
           {/* この下に書いてください */}
