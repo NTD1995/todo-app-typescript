@@ -23,7 +23,7 @@ function App() {
   // 編集対象のtodoのidを保持するstate（editId）を作成する
   // todoのidは数値なので、型はnumberにする
   // この下の定義を修正してください
-  const [editId, setEditId] = useState("");
+  const [editId, setEditId] = useState(todos.length + 1);
   // 編集用のタイトルの入力フォームの入力値を保持するstate（newTitle）
   const [newTitle, setNewTitle] = useState("");
   // 課題3
