@@ -115,7 +115,7 @@ function App() {
     // 編集フォームを閉じる
     setIsEditable(false);
     // 編集対象のtodoのidをリセットする
-    setEditId("");
+    setEditId(0);
     // 課題5
     // 編集用のタイトルの入力フォームをリセットする
     // この下に処理を記述してください
@@ -144,9 +144,9 @@ function App() {
     setTodos(newArray);
 
     // 編集対象のtodoのidをリセットする
-    setEditId("");
+    setEditId(0);
     // 入力されたタイトルをリセットする
-    setNewTitle("");
+    setNewTitle(0);
     // 課題5
     // 入力された詳細をリセットする
     // この下に処理を記述してください
