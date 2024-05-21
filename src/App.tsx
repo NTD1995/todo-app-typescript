@@ -87,10 +87,11 @@ function App() {
     // 課題5
     // 編集用の詳細の入力フォームに編集対象のtodoのdetailの値をセットする
     // この下に処理を記述してください
-
+    setNewDetail(todo.detail);
     // 課題5
     // 編集用のステータスのプルダウンに編集対象のtodoのstatusの値をセットする
     // この下に処理を記述してください
+    setNewStatus(todo.status);
   };
 
   // 編集用のタイトルの入力フォームの入力値を更新する処理
@@ -119,14 +120,15 @@ function App() {
     // 課題5
     // 編集用のタイトルの入力フォームをリセットする
     // この下に処理を記述してください
-
+    setNewTitle("");
     // 課題5
     // 編集用の詳細の入力フォームをリセットする
     // この下に処理を記述してください
-
+    setNewDetail("");
     // 課題5
     // 編集用のステータスのプルダウンをリセットする
     // この下に処理を記述してください
+    setNewStatus("");
   };
 
   // todoを編集する処理
@@ -146,15 +148,15 @@ function App() {
     // 編集対象のtodoのidをリセットする
     setEditId(0);
     // 入力されたタイトルをリセットする
-    setNewTitle(0);
+    setNewTitle("");
     // 課題5
     // 入力された詳細をリセットする
     // この下に処理を記述してください
-
+    setNewDetail("");
     // 課題5
     // 入力されたステータスをリセットする
     // この下に処理を記述してください
-
+    setNewStatus("");
     // 課題4
     // 編集フォームを閉じる
     // この下の処理を修正してください
@@ -259,8 +261,8 @@ function App() {
             id="detail"
             name="detail"
             value={newDetail}
+            onChange={handleEditDetailChange}
           />
-          onChange={handleEditDetailChange}
           {/* 課題1 */}
           {/* 編集用のステータスのプルダウン */}
           {/* この下に書いてください */}
@@ -270,15 +272,14 @@ function App() {
             <option value="inProgress">作業中</option>
             <option value="done">完了</option>
           </select>
-          onChange={handleEditStatusChange}
           {/* 課題1 */}
           {/* 編集を保存するボタン */}
           {/* この下に書いてください */}
-          <button>編集を保存</button>
+          <button onClick={() => handleOpenEditForm}>編集</button>
           {/* 課題1 */}
           {/* キャンセルするボタン */}
           {/* この下に書いてください */}
-          <button>キャンセル</button>
+          <button onClick={() => handleDeleteTodo}>削除</button>
         </div>
       ) : null}
     </>
