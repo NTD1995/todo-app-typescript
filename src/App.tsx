@@ -275,11 +275,11 @@ function App() {
           {/* 課題1 */}
           {/* 編集を保存するボタン */}
           {/* この下に書いてください */}
-          <button onClick={() => handleOpenEditForm}>編集</button>
+          <button onClick={() => handleOpenEditForm}>編集を保存</button>
           {/* 課題1 */}
           {/* キャンセルするボタン */}
           {/* この下に書いてください */}
-          <button onClick={() => handleDeleteTodo}>削除</button>
+          <button onClick={() => handleDeleteTodo}>キャンセル</button>
         </div>
       ) : null}
     </>
