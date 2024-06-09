@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react';
+import './App.css';
 
 type Todo = {
   id: number;
@@ -10,30 +10,19 @@ type Todo = {
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, title: "テスト", status: "未着手", detail: "あ" },
-    { id: 2, title: "テスト", status: "未着手", detail: "あ" },
-    { id: 3, title: "テスト", status: "未着手", detail: "あ" },
+    { id: 1, title: 'テスト', status: '未着手', detail: 'あ' },
+    { id: 2, title: 'テスト', status: '未着手', detail: 'あ' },
+    { id: 3, title: 'テスト', status: '未着手', detail: 'あ' },
   ]);
-  const [todoTitle, setTodoTitle] = useState("");
+  const [todoTitle, setTodoTitle] = useState('');
   const [todoId, setTodoId] = useState(todos.length + 1);
-  const [todoStatus, setTodoStatus] = useState("");
-  const [todoDetail, setTodoDetail] = useState("");
+  const [todoStatus, setTodoStatus] = useState('notStarted');
+  const [todoDetail, setTodoDetail] = useState('');
   const [isEditable, setIsEditable] = useState(false);
-  // 課題4
-  // 編集対象のtodoのidを保持するstate（editId）を作成する
-  // todoのidは数値なので、型はnumberにする
-  // この下の定義を修正してください
   const [editId, setEditId] = useState(todos.length + 1);
-  // 編集用のタイトルの入力フォームの入力値を保持するstate（newTitle）
-  const [newTitle, setNewTitle] = useState("");
-  // 課題3
-  // 編集用の詳細の入力フォームの入力値を保持するstate（newDetail）
-  // この下の定義を修正してください
-  const [newDetail, setNewDetail] = useState("");
-  // 課題3
-  // 編集用のステータスのプルダウンの入力値を保持するstate（newStatus）
-  // この下の定義を修正してください
-  const [newStatus, setNewStatus] = useState("");
+  const [newTitle, setNewTitle] = useState('');
+  const [newDetail, setNewDetail] = useState('');
+  const [newStatus, setNewStatus] = useState('');
 
   // eはイベントオブジェクト（eventのe）
   // イベントとは、ユーザーが行う操作（クリック、入力、スクロールなど）のこと
@@ -49,21 +38,23 @@ function App() {
   const handleAddTodo = () => {
     // バリデーション
     // todoTitleが空の場合は何もしない
-    if (todoTitle === "") return;
+    if (todoTitle === '') return;
 
-    setTodos([
-      ...todos,
-      { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail },
-    ]);
+    setTodos([...todos, { id: todoId, title: todoTitle, status: todoStatus, detail: todoDetail }]);
 
     setTodoId(todoId + 1);
     setTodoId(todoId + 1);
-    setTodoTitle("");
+    setTodoTitle('');
   };
 
   // todoを削除する処理
   const handleDeleteTodo = (targetTodo: any) => {
     setTodos(todos.filter((todo: any) => todo !== targetTodo));
+  };
+
+  // 編集用のタイトルの入力フォームの入力値を更新する処理
+  const handleEditTitleChange = (e: any) => {
+    setNewTitle(e.target.value);
   };
 
   // 入力された値でdetail（todoDetail）を更新する処理
@@ -84,32 +75,26 @@ function App() {
     setEditId(todo.id);
     // 編集用のタイトルの入力フォームに編集対象のtodoのtitleの値をセットする
     setNewTitle(todo.title);
-    // 課題5
     // 編集用の詳細の入力フォームに編集対象のtodoのdetailの値をセットする
-    // この下に処理を記述してください
     setNewDetail(todo.detail);
-    // 課題5
     // 編集用のステータスのプルダウンに編集対象のtodoのstatusの値をセットする
-    // この下に処理を記述してください
     setNewStatus(todo.status);
   };
 
-  // 編集用のタイトルの入力フォームの入力値を更新する処理
-  const handleEditTitleChange = (e: any) => {
-    setNewTitle(e.target.value);
+  // 編集用の詳細の入力フォームの入力値を更新する処理
+  const handleEditDetailChange = (e: any) => {
+    // FIXME: この下の処理を修正してください
+    // 更新したいのは編集用の詳細の入力値（newDetail）ですね
+    // setIsEditable(e.target.value);
+    setNewDetail(e.target.value);
   };
 
-  // 課題3
-  // 編集用の詳細の入力フォームの入力値を更新する処理
-  // この下に処理を記述してください
-  const handleEditDetailChange = (e: any) => {
-    setIsEditable(e.target.value);
-  };
-  // 課題3
   // 編集用のステータスのプルダウンの入力値を更新する処理
-  // この下に処理を記述してください
   const handleEditStatusChange = (e: any) => {
-    setIsEditable(e.target.value);
+    // FIXME: この下の処理を修正してください
+    // 更新したいのは編集用のステータスのプルダウンの入力値（newStatus）ですね
+    // setIsEditable(e.target.value);
+    setNewStatus(e.target.value);
   };
   // 編集フォームを閉じる処理
   const handleCloseEditForm = () => {
@@ -117,30 +102,20 @@ function App() {
     setIsEditable(false);
     // 編集対象のtodoのidをリセットする
     setEditId(0);
-    // 課題5
     // 編集用のタイトルの入力フォームをリセットする
-    // この下に処理を記述してください
-    setNewTitle("");
-    // 課題5
+    setNewTitle('');
     // 編集用の詳細の入力フォームをリセットする
-    // この下に処理を記述してください
-    setNewDetail("");
-    // 課題5
+    setNewDetail('');
     // 編集用のステータスのプルダウンをリセットする
-    // この下に処理を記述してください
-    setNewStatus("");
+    setNewStatus('');
   };
 
   // todoを編集する処理
   const handleEditTodo = () => {
-    // 課題4
     // 編集対象のtodoを入力されたtitle、detail、statusで更新した新しい配列（newArray）を作成する
     // mapメソッドを使って、編集対象のtodoのid（editId）とidが一致するtodoのtitle、detail、statusを更新する
-    // この下の処理を修正してください
     const newArray = todos.map((todo) =>
-      todo.id === editId
-        ? { ...todo, title: newTitle, detail: newDetail, status: newStatus }
-        : todo
+      todo.id === editId ? { ...todo, title: newTitle, detail: newDetail, status: newStatus } : todo
     );
     // todosをnewArrayで更新する
     setTodos(newArray);
@@ -148,21 +123,18 @@ function App() {
     // 編集対象のtodoのidをリセットする
     setEditId(0);
     // 入力されたタイトルをリセットする
-    setNewTitle("");
-    // 課題5
+    setNewTitle('');
     // 入力された詳細をリセットする
-    // この下に処理を記述してください
-    setNewDetail("");
-    // 課題5
+    setNewDetail('');
     // 入力されたステータスをリセットする
-    // この下に処理を記述してください
-    setNewStatus("");
-    // 課題4
+    setNewStatus('');
     // 編集フォームを閉じる
-    // この下の処理を修正してください
-    const handleCloseEditForm = () => {
-      setIsEditable(false);
-    };
+    // FIXME: この下の処理を修正してください
+    // 編集フォームを閉じる処理はisEditableをfalseにするだけですね！
+    // const handleCloseEditForm = () => {
+    //   setIsEditable(false);
+    // };
+    setIsEditable(false);
   };
 
   return (
@@ -170,31 +142,33 @@ function App() {
       {/* todoを新規追加するためのフォーム */}
       <div>
         {/* タイトルの入力フォーム */}
-        <label style={{ display: "block" }} htmlFor="title">
+        <label style={{ display: 'block' }} htmlFor="title">
           タイトル
         </label>
         <textarea
-          style={{ width: "20em", border: "1px solid #333" }}
+          style={{ width: '20em', border: '1px solid #333' }}
           id="title"
           name="title"
           value={todoTitle}
           onChange={onChangeTodoTitle}
         />
-        <button onClick={handleEditTodo}>編集を保存</button>
-        <button onClick={handleCloseEditForm}>キャンセル</button>
+        {/* FIXME: 「編集を保存する」ボタンと「キャンセル」ボタンを削除しましょう！ */}
+        {/* <button onClick={handleEditTodo}>編集を保存</button>
+        <button onClick={handleCloseEditForm}>キャンセル</button> */}
         {/* 詳細の入力フォーム */}
-        <label style={{ display: "block" }} htmlFor="detail">
+        <label style={{ display: 'block' }} htmlFor="detail">
           詳細
         </label>
         <textarea
-          style={{ width: "40em", border: "1px solid #333" }}
+          style={{ width: '40em', border: '1px solid #333' }}
           id="detail"
           name="detail"
           value={todoDetail}
           onChange={onChangeTodoDetail}
         />
-        <button onClick={handleEditTodo}>編集を保存</button>
-        <button onClick={handleCloseEditForm}>キャンセル</button>
+        {/* FIXME: 「編集を保存する」ボタンと「キャンセル」ボタンを削除しましょう！ */}
+        {/* <button onClick={handleEditTodo}>編集を保存</button>
+        <button onClick={handleCloseEditForm}>キャンセル</button> */}
         {/* ステータスを選択するためのプルダウン */}
         <select
           value={todoStatus}
@@ -210,76 +184,62 @@ function App() {
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
-            <span>
-              {todo.title} {todo.status} {todo.detail}
-            </span>
+            <span>{todo.title}</span>
+            <span>{todo.detail}</span>
             <select value={todo.status}>
               <option value="notStarted">未着手</option>
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
             </select>
-            {/* 課題2 */}
             {/* 編集ボタンを押すとtodoを編集するためのフォームが開くようにする */}
-            {/* 現在は編集ボタンを押すとtodoが削除されてしまうので、修正してください */}
             <button onClick={() => handleOpenEditForm(todo)}>編集</button>
             <button onClick={() => handleDeleteTodo(todo)}>削除</button>
           </li>
         ))}
       </ul>
       {/* todoを編集するためのフォーム */}
-      {/* 課題2 */}
       {/* todoを編集するためのフォームの表示を切り替えることができように設定する */}
-      {/* この下のdivタグが編集ボタンを押すことで現れるようにしてください */}
-      {/* 課題3 */}
       {/* 作成したフォームやプルダウンにステートを更新する処理を追加する */}
-      {/* 課題4 */}
       {/* 編集を保存するボタンを押すと、todoを編集する処理を追加する */}
-      {/* 課題4 */}
       {/* キャンセルするボタンを押すと、編集フォームを閉じる処理を追加する */}
       {/* 条件式 ? 真の時 : 偽の時 */}
       {/* isEditable === true ? true : 偽の時 */}
       {isEditable === true ? (
         <div>
-          <label style={{ display: "block" }} htmlFor="title">
+          <label style={{ display: 'block' }} htmlFor="title">
             タイトル
           </label>
-          {/* 課題1 */}
           {/* 編集用のタイトルの入力フォーム */}
-          {/* この下に書いてください */}
           <textarea
-            style={{ width: "20em", border: "1px solid #333" }}
+            style={{ width: '20em', border: '1px solid #333' }}
             id="title"
             name="title"
             value={newTitle}
             onChange={handleEditTitleChange}
           />
-          {/* 課題1 */}
           {/* 編集用の詳細の入力フォーム */}
-          {/* この下に書いてください */}
           <textarea
-            style={{ width: "20em", border: "1px solid #333" }}
+            style={{ width: '20em', border: '1px solid #333' }}
             id="detail"
             name="detail"
             value={newDetail}
             onChange={handleEditDetailChange}
           />
-          {/* 課題1 */}
           {/* 編集用のステータスのプルダウン */}
-          {/* この下に書いてください */}
-          <select>
+          <select value={newStatus} onChange={handleEditStatusChange}>
             <option value="all">すべて</option>
             <option value="notStarted">未着手</option>
             <option value="inProgress">作業中</option>
             <option value="done">完了</option>
           </select>
-          {/* 課題1 */}
           {/* 編集を保存するボタン */}
-          {/* この下に書いてください */}
-          <button onClick={() => handleOpenEditForm}>編集を保存</button>
-          {/* 課題1 */}
+          {/* FIXME: onClickに設定する処理をhandleEditTodoにしましょう */}
+          {/* <button onClick={() => handleOpenEditForm}>編集を保存</button> */}
+          <button onClick={handleEditTodo}>編集を保存</button>
           {/* キャンセルするボタン */}
-          {/* この下に書いてください */}
-          <button onClick={() => handleDeleteTodo}>キャンセル</button>
+          {/* FIXME: 「キャンセルする」ために、編集用の入力フォームを閉じて入力された値をリセットするhandleCloseEditFormを設定しましょう */}
+          {/* <button onClick={() => handleDeleteTodo}>キャンセル</button> */}
+          <button onClick={handleCloseEditForm}>キャンセル</button>
         </div>
       ) : null}
     </>
