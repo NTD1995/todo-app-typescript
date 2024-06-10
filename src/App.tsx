@@ -85,14 +85,14 @@ function App() {
   const handleEditDetailChange = (e: any) => {
     // FIXME: この下の処理を修正してください
     // 更新したいのは編集用の詳細の入力値（newDetail）ですね
-    setIsEditable(e.target.value);
+    setNewDetail(e.target.value);
   };
 
   // 編集用のステータスのプルダウンの入力値を更新する処理
   const handleEditStatusChange = (e: any) => {
     // FIXME: この下の処理を修正してください
     // 更新したいのは編集用のステータスのプルダウンの入力値（newStatus）ですね
-    setIsEditable(e.target.value);
+    setNewStatus(e.target.value);
   };
   // 編集フォームを閉じる処理
   const handleCloseEditForm = () => {
@@ -129,9 +129,8 @@ function App() {
     // 編集フォームを閉じる
     // FIXME: この下の処理を修正してください
     // 編集フォームを閉じる処理はisEditableをfalseにするだけですね！
-    const handleCloseEditForm = () => {
-      setIsEditable(false);
-    };
+    setIsEditable(false);
+    
   };
 
   return (
@@ -150,8 +149,6 @@ function App() {
           onChange={onChangeTodoTitle}
         />
         {/* FIXME: 「編集を保存する」ボタンと「キャンセル」ボタンを削除しましょう！ */}
-        <button onClick={handleEditTodo}>編集を保存</button>
-        <button onClick={handleCloseEditForm}>キャンセル</button>
         {/* 詳細の入力フォーム */}
         <label style={{ display: 'block' }} htmlFor="detail">
           詳細
@@ -164,8 +161,6 @@ function App() {
           onChange={onChangeTodoDetail}
         />
         {/* FIXME: 「編集を保存する」ボタンと「キャンセル」ボタンを削除しましょう！ */}
-        <button onClick={handleEditTodo}>編集を保存</button>
-        <button onClick={handleCloseEditForm}>キャンセル</button>
         {/* ステータスを選択するためのプルダウン */}
         <select
           value={todoStatus}
@@ -231,10 +226,10 @@ function App() {
           </select>
           {/* 編集を保存するボタン */}
           {/* FIXME: onClickに設定する処理をhandleEditTodoにしましょう */}
-          <button onClick={() => handleOpenEditForm}>編集を保存</button>
+          <button onClick={() => handleEditTodo}>編集を保存</button>
           {/* キャンセルするボタン */}
           {/* FIXME: 「キャンセルする」ために、編集用の入力フォームを閉じて入力された値をリセットするhandleCloseEditFormを設定しましょう */}
-          <button onClick={() => handleDeleteTodo}>キャンセル</button>
+          <button onClick={() => handleCloseEditForm}>キャンセル</button>
         </div>
       ) : null}
     </>
